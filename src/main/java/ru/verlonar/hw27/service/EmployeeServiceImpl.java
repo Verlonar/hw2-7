@@ -5,16 +5,16 @@ import ru.verlonar.hw27.data.Employee;
 import ru.verlonar.hw27.exception.EmployeeIsAlreadyExistException;
 import ru.verlonar.hw27.exception.EmployeeNotFoundException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    final List<Employee> employees;
+    final Map<String, Employee> employees;
 
     public EmployeeServiceImpl() {
-        this.employees = new ArrayList<>();
+        this.employees = new HashMap<>();
     }
 
     @Override
@@ -23,8 +23,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (newEmployee != null) {
             throw new EmployeeIsAlreadyExistException();
         } else {
+            String fullName = firstName + " " + lastName;
             newEmployee = new Employee(firstName, lastName);
-            employees.add(newEmployee);
+            employees.put(fullName, newEmployee);
             return newEmployee;
         }
     }
@@ -35,7 +36,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeToDelete == null) {
             throw new EmployeeNotFoundException();
         } else {
-            employees.remove(employeeToDelete);
+            String fullName = firstName + " " + lastName;
+            employees.remove(fullName);
             return employeeToDelete;
         }
     }
@@ -51,15 +53,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> showAll() {
+    public Map<String, Employee> showAll() {
         return employees;
     }
 
     private Employee contains(String firstName, String lastName) {
-        for (Employee employee : employees) {
-            if (employee.getFirstName().equals(firstName) && employee.getLastName().contains(lastName)) {
-                return employee;
-            }
+        String fullName = firstName + " " + lastName;
+        if (employees.containsKey(fullName)) {
+            return employees.get(fullName);
         }
         return null;
     }

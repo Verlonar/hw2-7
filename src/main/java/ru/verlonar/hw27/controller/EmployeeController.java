@@ -8,6 +8,7 @@ import ru.verlonar.hw27.data.Employee;
 import ru.verlonar.hw27.service.EmployeeService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/employee")
@@ -35,7 +36,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/showAll")
-    public List<Employee> showAll() {
+    public Map<String, Employee> showAll() {
         return employeeService.showAll();
     }
 }

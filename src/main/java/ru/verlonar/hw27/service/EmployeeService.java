@@ -2,7 +2,7 @@ package ru.verlonar.hw27.service;
 
 import ru.verlonar.hw27.data.Employee;
 
-import java.util.List;
+import java.util.Map;
 
 public interface EmployeeService {
 
@@ -12,5 +12,5 @@ public interface EmployeeService {
 
     Employee findEmployee(String firstName, String lastName);
 
-    List<Employee> showAll();
+    Map<String, Employee> showAll();
 }
